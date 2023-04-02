@@ -1,7 +1,4 @@
 <!--index.wxml-->
-<!-- 添加隐藏的 canvas 组件 -->
-<canvas canvas-id="myCanvas" style="width: 300px; height: 200px; position: fixed; top: -9999px;"></canvas>
-
 <view class="container">
   <view class="userinfo">
     <block wx:if="{{canIUseOpenData}}">
@@ -29,4 +26,8 @@
   <camera></camera>
   <!-- 添加倒计时文本 -->
   <view class="countdown">{{ countdownText }}</view>
+  <!-- 添加隐藏的 canvas 组件 -->
+  <canvas canvas-id="myCanvas" style="width: 300px; height: 200px; position: fixed; top: -9999px;"></canvas>
+  <!-- 添加相机组件 -->
+  <camera id="refCamera"></camera>
 </view>
