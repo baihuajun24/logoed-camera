@@ -28,6 +28,4 @@
   <camera></camera>
   <!-- 添加倒计时文本 -->
   <view class="countdown">{{ countdownText }}</view>
-  <!-- 添加相机组件 -->
-  <camera id="refCamera"></camera>
 </view>
