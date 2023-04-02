@@ -62,6 +62,18 @@ Page({
       }
     })
   },
+  takePhoto() {
+    wx.chooseImage({
+      count: 1,
+      sourceType: ['camera'],
+      success: (res) => {
+        const tempFilePaths = res.tempFilePaths;
+        // 您可以在这里处理照片，例如添加水印或其他操作
+        console.log('照片路径：', tempFilePaths);
+      },
+    });
+  },
+  
   getUserInfo(e: any) {
     // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
     console.log(e)
