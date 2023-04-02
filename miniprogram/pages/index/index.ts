@@ -10,7 +10,7 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
     countdownText: '00:00:00',
-    targetDate: '2023-11-20 19:59:59', // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
+    targetDate: '2023-11-20', // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
     canvasHeight: 800,
     canvasWidth: 600
   },
@@ -34,8 +34,16 @@ Page({
 
   getRemainingTime() {
     const currentTime = new Date();
-    const testTime = new Date(this.data.targetDate);
-    const remainingTime = Math.abs((testTime as any as number) - (currentTime as any as number));
+    const testTime = new Date(this.data.targetDate + ' 00:00:00');
+    let remainingTime: number;
+    if (currentTime > testTime) {
+      // 当前时间已经超过了目标时间
+      remainingTime = (currentTime as any as number) - (testTime as any as number);
+    } else {
+      // 当前时间还未到达目标时间
+      remainingTime = (testTime as any as number) - (currentTime as any as number);
+    }
+    //const remainingTime = Math.abs((testTime as any as number) - (currentTime as any as number));
     const hours = Math.floor(remainingTime / (1000 * 60 * 60));
     const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
