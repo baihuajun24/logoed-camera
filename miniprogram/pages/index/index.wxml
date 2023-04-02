@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <!-- 添加隐藏的 canvas 组件 -->
-  <canvas canvas-id="myCanvas" style="width: auto; height: auto; position: fixed; top: -9999px;"></canvas>
+  <canvas canvas-id="myCanvas" style="width: {{canvasWidth}}px; height: {{canvasHeight}}px; position: fixed; top: -9999px;"></canvas>
   <view class="userinfo">
     <block wx:if="{{canIUseOpenData}}">
       <view class="userinfo-avatar" bindtap="bindViewTap">
