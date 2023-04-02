@@ -72,15 +72,6 @@ Page({
     console.log(this.data.targetDate);
   },
   
-  // updateTargetDate() {
-  //   this.setData({
-  //     // targetDate: new Date(this.data.targetDate + ' 23:59:59')
-  //     targetDate: this.data.targetDate
-  //   });
-  //   // 在这里重新启动倒计时，如果需要的话
-  // },
-  
-
   getUserProfile() {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
@@ -136,7 +127,7 @@ Page({
                     filePath: res.tempFilePath,
                     success() {
                       wx.showToast({
-                        title: '保存成功',
+                        title: '宇宙为你闪烁！',
                         icon: 'success',
                         duration: 2000
                       });
@@ -160,62 +151,7 @@ Page({
       },
     });
   },
-  
-  // takePhoto() {
-  //   wx.chooseImage({
-  //     count: 1,
-  //     sourceType: ['camera'],
-  //     success: (res) => {
-  //       const tempFilePaths = res.tempFilePaths;
-  //       // 您可以在这里处理照片，例如添加水印或其他操作
-  //       console.log('照片路径：', tempFilePaths);
-  
-  //       const ctx = wx.createCanvasContext('myCanvas', this);
-  
-  //       // 将拍摄到的照片绘制到 canvas 上
-  //       ctx.drawImage(tempFilePaths[0], 0, 0, 300, 200);
-  //       // 在 canvas 上绘制倒计时文本
-  //       ctx.setFillStyle('white');
-  //       ctx.setFontSize(20);
-  //       console.log(this.data.countdownText)
-  //       // this.data.countdownText = "0402 test content"
-  //       ctx.fillText(this.data.countdownText.toString(), 10, 30);
-  
-  //       // 将修改后的 canvas 保存为图片
-  //       ctx.draw(false, () => {
-  //         wx.canvasToTempFilePath({
-  //           canvasId: 'myCanvas',
-  //           success: (res) => {
-  //             // 此处可以处理新生成的图片，例如保存到相册或发送给朋友
-  //             console.log('新图片路径：', res.tempFilePath);
-  //             // 保存到系统相册
-  //             wx.saveImageToPhotosAlbum({
-  //               filePath: res.tempFilePath,
-  //               success() {
-  //                 wx.showToast({
-  //                   title: '保存成功',
-  //                   icon: 'success',
-  //                   duration: 2000
-  //                 });
-  //               },
-  //               fail() {
-  //                 wx.showToast({
-  //                   title: '保存失败',
-  //                   icon: 'none',
-  //                   duration: 2000
-  //                 });
-  //               }
-  //             });
-  //           },
-  //           fail: (err) => {
-  //             console.error('canvasToTempFilePath 失败: ', err);
-  //           }
-  //         });
-  //       });
-  //     },
-  //   });
-  // },
-  
+
   getUserInfo(e: any) {
     // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
     console.log(e)
