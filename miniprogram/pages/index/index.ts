@@ -11,7 +11,7 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
     countdownText: '00:00:00',
-    targetDate: new Date('2022-11-20 19:59:59'), // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
+    targetDate: new Date('2023-11-20 19:59:59'), // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
   },
   // 事件处理函数
   bindViewTap() {
@@ -82,7 +82,8 @@ Page({
         // 在 canvas 上绘制倒计时文本
         ctx.setFillStyle('white');
         ctx.setFontSize(20);
-        ctx.fillText(this.getRemainingTime(), 10, 30);
+        console.log(this.data.countdownText)
+        ctx.fillText(this.data.countdownText, 10, 30);
   
         // 将修改后的 canvas 保存为图片
         ctx.draw(false, () => {
