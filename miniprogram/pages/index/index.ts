@@ -85,7 +85,6 @@ Page({
       }
     })
   },
-
   takePhoto() {
     wx.chooseImage({
       count: 1,
@@ -99,61 +98,54 @@ Page({
           success: (res) => {
             const imgWidth = res.width;
             const imgHeight = res.height;
-  
+
             this.setData({
               canvasWidth: imgWidth,
               canvasHeight: imgHeight
-            });
+            });            
   
-            // 确保 canvas 宽度和高度已更新
-            wx.createSelectorQuery()
-              .select('#myCanvas')
-              .fields({ node: true, size: true })
-              .exec((res) => {
-                const canvas = res[0].node;
-                const ctx = canvas.getContext('2d');
+            const ctx = wx.createCanvasContext('myCanvas', this);
   
-                // 将拍摄到的照片绘制到 canvas 上
-                ctx.drawImage(tempFilePaths[0], 0, 0, imgWidth, imgHeight);
+            // 将拍摄到的照片绘制到 canvas 上
+            ctx.drawImage(tempFilePaths[0], 0, 0, imgWidth, imgHeight);
   
-                // 在 canvas 上绘制倒计时文本
-                ctx.setFillStyle('orangered');
-                ctx.setFontSize(80);
-                const textWidth = ctx.measureText(this.data.countdownText).width;
-                const x = (imgWidth - textWidth) / 2;
-                const y = imgHeight / 2;
-                ctx.fillText(this.data.countdownText, x, y);
+            // 在 canvas 上绘制倒计时文本
+            ctx.setFillStyle('orangered');
+            ctx.setFontSize(80);
+            const textWidth = ctx.measureText(this.data.countdownText).width;
+            const x = (imgWidth - textWidth) / 2;
+            const y = imgHeight / 2;
+            ctx.fillText(this.data.countdownText, x, y);
   
-                // 将修改后的 canvas 保存为图片
-                ctx.draw(false, () => {
-                  wx.canvasToTempFilePath({
-                    canvas: canvas,
-                    success: (res) => {
-                      console.log('新图片路径：', res.tempFilePath);
-                      wx.saveImageToPhotosAlbum({
-                        filePath: res.tempFilePath,
-                        success() {
-                          wx.showToast({
-                            title: '保存成功',
-                            icon: 'success',
-                            duration: 2000
-                          });
-                        },
-                        fail() {
-                          wx.showToast({
-                            title: '保存失败',
-                            icon: 'none',
-                            duration: 2000
-                          });
-                        }
+            // 将修改后的 canvas 保存为图片
+            ctx.draw(false, () => {
+              wx.canvasToTempFilePath({
+                canvasId: 'myCanvas',
+                success: (res) => {
+                  console.log('新图片路径：', res.tempFilePath);
+                  wx.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success() {
+                      wx.showToast({
+                        title: '宇宙为你闪烁！',
+                        icon: 'success',
+                        duration: 2000
                       });
                     },
-                    fail: (err) => {
-                      console.error('canvasToTempFilePath 失败: ', err);
+                    fail() {
+                      wx.showToast({
+                        title: '保存失败',
+                        icon: 'none',
+                        duration: 2000
+                      });
                     }
                   });
-                });
+                },
+                fail: (err) => {
+                  console.error('canvasToTempFilePath 失败: ', err);
+                }
               });
+            });
           },
         });
       },
