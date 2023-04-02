@@ -56,6 +56,21 @@ Page({
     updateCountdown();
   },
 
+  onDateInput(e: any ) {
+    this.setData({
+      targetDate: e.detail.value
+    });
+  },
+  
+  updateTargetDate() {
+    this.setData({
+      // targetDate: new Date(this.data.targetDate + ' 23:59:59')
+      targetDate: this.data.targetDate + ' 23:59:59'
+    });
+    // 在这里重新启动倒计时，如果需要的话
+  },
+  
+
   getUserProfile() {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
