@@ -56,16 +56,18 @@ Page({
     updateCountdown();
   },
 
-  onDateInput(e: any ) {
+  onDateChange(e: any ) {
     this.setData({
       targetDate: e.detail.value
+      
     });
+    console.log(this.data.targetDate);
   },
   
   updateTargetDate() {
     this.setData({
       // targetDate: new Date(this.data.targetDate + ' 23:59:59')
-      targetDate: this.data.targetDate + ' 23:59:59'
+      targetDate: this.data.targetDate
     });
     // 在这里重新启动倒计时，如果需要的话
   },
