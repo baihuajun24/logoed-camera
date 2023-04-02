@@ -95,7 +95,7 @@ Page({
             ctx.drawImage(tempFilePaths[0], 0, 0, imgWidth, imgHeight);
   
             // 在 canvas 上绘制倒计时文本
-            ctx.setFillStyle('orange');
+            ctx.setFillStyle('orangered');
             ctx.setFontSize(80);
             const textWidth = ctx.measureText(this.data.countdownText).width;
             const x = (imgWidth - textWidth) / 2;
