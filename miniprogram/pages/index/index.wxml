@@ -19,9 +19,6 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
   <!-- 添加启动相机按钮 -->
   <button class="camera-button" bindtap="takePhoto">启动相机</button>
   <!-- 添加相机组件 -->
