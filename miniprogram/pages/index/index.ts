@@ -63,19 +63,24 @@ Page({
     })
   },
   takePhoto() {
-    const ctx = wx.createCanvasContext('myCanvas', this);
-    const cameraContext = wx.createCameraContext();
-    
-    cameraContext.takePhoto({
+    wx.chooseImage({
+      count: 1,
+      sourceType: ['camera'],
       success: (res) => {
+        const tempFilePaths = res.tempFilePaths;
+        // 您可以在这里处理照片，例如添加水印或其他操作
+        console.log('照片路径：', tempFilePaths);
+  
+        const ctx = wx.createCanvasContext('myCanvas', this);
+  
         // 将拍摄到的照片绘制到 canvas 上
-        ctx.drawImage(res.tempImagePath, 0, 0, 300, 200);
-        
+        ctx.drawImage(tempFilePaths[0], 0, 0, 300, 200);
+  
         // 在 canvas 上绘制倒计时文本
         ctx.setFillStyle('white');
         ctx.setFontSize(20);
         ctx.fillText(this.data.countdownText, 10, 30);
-        
+  
         // 将修改后的 canvas 保存为图片
         ctx.draw(false, () => {
           wx.canvasToTempFilePath({
@@ -107,7 +112,7 @@ Page({
             }
           });
         });
-      }
+      },
     });
   },
   
