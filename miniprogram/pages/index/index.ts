@@ -10,7 +10,7 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
     countdownText: '00:00:00',
-    targetDate: '2023-11-20', // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
+    targetDate: '2023-11-20 19:59:59', // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
     canvasHeight: 800,
     canvasWidth: 600
   },
@@ -64,13 +64,13 @@ Page({
     console.log(this.data.targetDate);
   },
   
-  updateTargetDate() {
-    this.setData({
-      // targetDate: new Date(this.data.targetDate + ' 23:59:59')
-      targetDate: this.data.targetDate
-    });
-    // 在这里重新启动倒计时，如果需要的话
-  },
+  // updateTargetDate() {
+  //   this.setData({
+  //     // targetDate: new Date(this.data.targetDate + ' 23:59:59')
+  //     targetDate: this.data.targetDate
+  //   });
+  //   // 在这里重新启动倒计时，如果需要的话
+  // },
   
 
   getUserProfile() {
