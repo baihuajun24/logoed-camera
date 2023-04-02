@@ -30,25 +30,29 @@ Page({
     // 开始倒计时
     this.startCountdown();
   },
+
+  getRemainingTime() {
+    const currentTime = new Date();
+    const remainingTime = Math.abs((this.data.targetDate as any as number) - (currentTime as any as number));
+  
+    const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+  
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  },
+  
   startCountdown() {
     const updateCountdown = () => {
-      const currentTime = new Date();
-      // const remainingTime = this.data.targetDate - currentTime; // debuged by chatGPT
-      const remainingTime = (this.data.targetDate as any as number) - (currentTime as any as number);
-      
-      const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-      const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
       this.setData({
-        countdownText: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        countdownText: this.getRemainingTime()
       });
-
+  
       setTimeout(updateCountdown, 1000);
     }
-
     updateCountdown();
   },
+
   getUserProfile() {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
@@ -75,11 +79,10 @@ Page({
   
         // 将拍摄到的照片绘制到 canvas 上
         ctx.drawImage(tempFilePaths[0], 0, 0, 300, 200);
-  
         // 在 canvas 上绘制倒计时文本
         ctx.setFillStyle('white');
         ctx.setFontSize(20);
-        ctx.fillText(this.data.countdownText, 10, 30);
+        ctx.fillText(this.getRemainingTime(), 10, 30);
   
         // 将修改后的 canvas 保存为图片
         ctx.draw(false, () => {
