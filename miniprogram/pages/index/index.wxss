@@ -90,3 +90,16 @@
   font-size: 14px;
 }
 
+.input-container {
+  margin: 20rpx;
+}
+
+.picker {
+  padding: 10rpx 20rpx;
+  background-color: #1AAD19;
+  color: #ffffff;
+  border-radius: 4rpx;
+  text-align: center;
+}
+
+

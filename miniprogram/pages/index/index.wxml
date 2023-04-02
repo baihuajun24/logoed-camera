@@ -19,6 +19,14 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
+  <view class="input-container">
+  <picker mode="date" bindchange="onDateChange">
+    <view class="picker">
+      请选择日期: {{targetDate}}
+    </view>
+  </picker>
+  </view>
+
   <input class="date-input" type="date" placeholder="选择日期" value="{{targetDate}}" bindinput="onDateInput" />
   <button class="update-date-button" bindtap="updateTargetDate">更新日期</button>
   <!-- 添加启动相机按钮 -->
