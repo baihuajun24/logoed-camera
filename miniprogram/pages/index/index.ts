@@ -10,8 +10,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
-    countdownText: '00:00:00',
-    targetDate: new Date('2023-11-20 19:59:59') // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
+    countdownText: 0,
+    targetDate: '2023-11-20 23:59:59' // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
   },
   // 事件处理函数
   bindViewTap() {
@@ -33,15 +33,15 @@ Page({
 
   getRemainingTime() {
     const currentTime = new Date();
-    const remainingTime = Math.abs((this.data.targetDate as any as number) - (currentTime as any as number));
-
+    const testTime = new Date(this.data.targetDate);
+    const remainingTime = Math.abs((testTime as any as number) - (currentTime as any as number));
     const hours = Math.floor(remainingTime / (1000 * 60 * 60));
     const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-    return totalSeconds;
+    // return totalSeconds;
     // return HH:MM:SS version
-    // return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   },
   
   startCountdown() {
@@ -86,7 +86,7 @@ Page({
         ctx.setFontSize(20);
         console.log(this.data.countdownText)
         // this.data.countdownText = "0402 test content"
-        ctx.fillText(this.data.countdownText, 10, 30);
+        ctx.fillText(this.data.countdownText.toString(), 10, 30);
   
         // 将修改后的 canvas 保存为图片
         ctx.draw(false, () => {
