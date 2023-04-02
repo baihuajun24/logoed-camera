@@ -10,7 +10,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
-    countdown: '00:00:00',
+    countdownText: '00:00:00',
     targetDate: new Date('2022-11-20 19:59:59'), // 设置目标日期，例如：new Date('2023-12-31 23:59:59')
   },
   // 事件处理函数
@@ -41,7 +41,7 @@ Page({
       const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
       this.setData({
-        countdown: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        countdownText: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
       });
 
       setTimeout(updateCountdown, 1000);
@@ -63,14 +63,51 @@ Page({
     })
   },
   takePhoto() {
-    wx.chooseImage({
-      count: 1,
-      sourceType: ['camera'],
+    const ctx = wx.createCanvasContext('myCanvas', this);
+    const cameraContext = wx.createCameraContext();
+    
+    cameraContext.takePhoto({
       success: (res) => {
-        const tempFilePaths = res.tempFilePaths;
-        // 您可以在这里处理照片，例如添加水印或其他操作
-        console.log('照片路径：', tempFilePaths);
-      },
+        // 将拍摄到的照片绘制到 canvas 上
+        ctx.drawImage(res.tempImagePath, 0, 0, 300, 200);
+        
+        // 在 canvas 上绘制倒计时文本
+        ctx.setFillStyle('white');
+        ctx.setFontSize(20);
+        ctx.fillText(this.data.countdownText, 10, 30);
+        
+        // 将修改后的 canvas 保存为图片
+        ctx.draw(false, () => {
+          wx.canvasToTempFilePath({
+            canvasId: 'myCanvas',
+            success: (res) => {
+              // 此处可以处理新生成的图片，例如保存到相册或发送给朋友
+              console.log('新图片路径：', res.tempFilePath);
+              // 保存到系统相册
+              wx.saveImageToPhotosAlbum({
+                filePath: res.tempFilePath,
+                success() {
+                  wx.showToast({
+                    title: '保存成功',
+                    icon: 'success',
+                    duration: 2000
+                  });
+                },
+                fail() {
+                  wx.showToast({
+                    title: '保存失败',
+                    icon: 'none',
+                    duration: 2000
+                  });
+                }
+              });
+            },
+            fail: (err) => {
+              console.error('canvasToTempFilePath 失败: ', err);
+            }
+          });
+        });
+      }
     });
   },
   
